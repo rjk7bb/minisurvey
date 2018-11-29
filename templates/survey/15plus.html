@@ -1,0 +1,14 @@
+<form method="post" novalidate>
+    {% csrf_token %}
+    <p>
+        Would you be willing to share your opinion of this game as a testimonial? If so,please give us your name and your thoughts below. Thank you!
+    </p><br>
+    <l>Your thoughts:</l><br>
+    {{ form.comment1 }}
+    <br><br>
+    <l>Your name:</l>
+    <br>
+    {{ form.comment2 }}
+    <br><br>
+    <button type="submit">Submit</button>
+</form>

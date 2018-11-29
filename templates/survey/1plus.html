@@ -1,0 +1,11 @@
+<form method="post" novalidate >
+    <h2>
+    Of all the people in your "group" (for example, in the Situation Room, on a news team), what percentage of the work did you do?<br>
+    </h2>
+    {% csrf_token %}
+    <p>
+        Please fill in the blank below.[Your answer must be between 0 and 100]
+    </p>
+    {{ form }}
+    <button type="submit" >Go</button>
+</form>

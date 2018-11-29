@@ -1,0 +1,12 @@
+<form method="post" novalidate>
+  {% csrf_token %}
+    <h>
+        Regardless of their official position, who in your group do you think had the most power? [Please list the person’s role, not their name]<br>
+    </h>
+    <br>
+    <p>
+        The person in my group with the most power was:
+    </p>
+  {{ form }}
+  <button type="submit" value="Go">Submit</button>
+</form>

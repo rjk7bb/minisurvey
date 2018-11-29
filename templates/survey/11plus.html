@@ -1,0 +1,9 @@
+<form method="post" novalidate>
+    {% csrf_token %}
+    <p>
+        In general, the above questions in this post-simulation questionnaire were clear.
+    </p>
+    {{ form }}
+    <br>
+    <button type="submit">Submit</button>
+</form>

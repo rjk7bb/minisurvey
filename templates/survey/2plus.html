@@ -1,0 +1,9 @@
+<form method="post" novalidate>
+  {% csrf_token %}
+    <h>
+        Compared to other people in your group, how would you rank your performance on the simulation?<br>
+    </h>
+    <br>
+  {{ form }}
+  <button type="submit" value="Go">Submit</button>
+</form>

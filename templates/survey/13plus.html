@@ -1,0 +1,9 @@
+<form method="post" novalidate>
+    {% csrf_token %}
+    <p>
+        Your impression of this Situation Room Experience as a whole is:
+    </p>
+    {{ form }}
+    <br>
+    <button type="submit">Submit</button>
+</form>

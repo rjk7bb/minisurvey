@@ -1,0 +1,17 @@
+<form method="post" novalidate>
+  {% csrf_token %}
+    <p>
+        Was there any information that you didn’t share with your group?
+    </p><br>
+    {{ form.yn}}
+    <p>
+        One piece of information I did not share was:
+    </p><br>
+    {{ form.response }}
+    <p>
+        I chose not to share this information because:
+    </p><br>
+    {{ form.response2 }}
+    <br>
+  <button type="submit" value="Go">Submit</button>
+</form>

@@ -1,0 +1,9 @@
+<form method="post" novalidate>
+    {% csrf_token %}
+    <p>
+        Are there any changes to this game that you would like to see made? What are they? Any other comments?
+    </p>
+    {{ form }}
+    <br>
+    <button type="submit">Submit</button>
+</form>

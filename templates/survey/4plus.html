@@ -1,0 +1,13 @@
+<form method="post" novalidate>
+    <p>
+        Think about a decision you made during the simulation that you now think could have gone better. What was one reason why this happened? <br>
+        Why did you make a poor decision? No need to list specific names. Responses need to be under 140 characters.
+    </p>
+  {% csrf_token %}
+    <p>
+         One reason that you made a poor decision was:
+    </p>
+  {{ form }}
+    <br>
+  <button type="submit" value="Go">Submit</button>
+</form>

@@ -1,0 +1,12 @@
+<form method="post" novalidate>
+  {% csrf_token %}
+    <h>
+        Regardless of their official position, who in your group do you think was the most effective? [Please list the person’s role, not their name]<br>
+    </h>
+    <br>
+    <p>
+        The person in my group that was most effective was:
+    </p>
+  {{ form }}
+  <button type="submit" value="Go">Submit</button>
+</form>

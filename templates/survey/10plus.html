@@ -1,0 +1,23 @@
+<form method="post" novalidate>
+    {% csrf_token %}
+    <p>
+        Think back to your decision about whether or not to invoke the 25th Amendment (or, think about what you would have done if it were up to you).
+        What are some reasons for why you would decide to invoke or not invoke the 25th Amendment?
+    </p>
+    {{ form.q1 }}<br>
+    {{ form.option }}<br>
+    <br>
+
+    {{ form.q2 }}<br>
+    {{ form.q2a }}<br>
+    <br>
+
+    {{ form.q3 }}<br>
+    {{ form.q3a }}<br>
+    <br>
+
+    {{ form.q4 }}<br>
+    {{ form.q4a }}<br>
+    <br>
+    <button type="submit">Submit</button>
+</form>
