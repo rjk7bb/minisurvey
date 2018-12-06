@@ -2,7 +2,7 @@ from django import forms
 
 
 class Question1(forms.Form):
-    number = forms.IntegerField(min_value=0, max_value=100, label='')
+    number = forms.IntegerField(min_value=0, max_value=100, label='', required=False)
 
     def clean(self):
         cleaned_data = super(Question1, self).clean()
@@ -21,31 +21,23 @@ class Question2(forms.Form):
                ('Extremely above average', 'Extremely above average'))
     Options = forms.ChoiceField(choices=Choices, widget=forms.RadioSelect, label='')
 
-    def clean(self):
-        cleaned_data = super(Question2, self).clean()
-        resp = cleaned_data.get('Options')
-        if not resp:
-            raise forms.ValidationError('Select an option')
-
 
 class Question3(forms.Form):
-    response = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140)
-
-    def clean(self):
-        cleaned_data = super(Question3, self).clean()
-        resp = cleaned_data.get('response')
-        if not resp:
-            raise forms.ValidationError('Enter a response.')
+    response = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140,
+                               required=False)
 
 
 class Question4(forms.Form):
-    response = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140)
+    response = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140,
+                               required=False)
 
-    def clean(self):
-        cleaned_data = super(Question4, self).clean()
-        resp = cleaned_data.get('response')
-        if not resp:
-            raise forms.ValidationError('Enter a response.')
+
+    # def clean(self):
+    #     cleaned_data = super(Question4, self).clean()
+    #     resp = cleaned_data.get('response')
+    #     if not resp:
+    #         raise forms.ValidationError('Enter a response.')
+
 
 
 class Question5(forms.Form):
@@ -82,55 +74,30 @@ class Question5(forms.Form):
                ('White House Counsel', 'White House Counsel'),
                ('White House Political Director', 'White House Political Director'))
 
-    Options = forms.CharField(label='', widget=forms.Select(choices=Choices))
-
-    def clean(self):
-        cleaned_data = super(Question5, self).clean()
-        resp = cleaned_data.get('Options')
-        if not resp:
-            raise forms.ValidationError('Select an option')
+    Options = forms.CharField(label='', widget=forms.Select(choices=Choices), required=False)
 
 
 class Question7(forms.Form):
-    yn = forms.CharField(label='', widget=forms.Select(choices=(('Yes', 'Yes'), ('No', 'No'))))
-    response = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140)
-    response2 = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140)
-
-    def clean(self):
-        cleaned_data = super(Question7, self).clean()
-        resp = cleaned_data.get('response')
-        if not resp:
-            raise forms.ValidationError('Write a response')
-        resp = cleaned_data.get('response2')
-        if not resp:
-            raise forms.ValidationError('Write a response')
+    yn = forms.CharField(label='', widget=forms.Select(choices=(('Yes', 'Yes'), ('No', 'No'))), required=False)
+    response = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140,
+                               required=False)
+    response2 = forms.CharField(widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), label='', max_length=140,
+                                required=False)
 
 
 class Question10(forms.Form):
     options = (('Invoke', 'Invoke'), ('Not Invoke', 'Not Invoke'))
     q1 = 'I would invoke/not invoke the 25th Amendment'
-    option = forms.CharField(widget=forms.Select(choices=options))
+    option = forms.CharField(widget=forms.Select(choices=options), required=False)
     q2 = 'One reason for this decision is:'
-    q2a = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140)
+    q2a = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140,
+                          required=False)
     q3 = 'Another reason is:'
-    q3a = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140)
+    q3a = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140,
+                          required=False)
     q4 = 'A final reason is:'
-    q4a = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140)
-
-    def clean(self):
-        cleaned_data = super(Question10, self).clean()
-        resp = cleaned_data.get('option')
-        if not resp:
-            raise forms.ValidationError('Select an option')
-        resp = cleaned_data.get('q2a')
-        if not resp:
-            raise forms.ValidationError('Write a response')
-        resp = cleaned_data.get('q3a')
-        if not resp:
-            raise forms.ValidationError('Write a response')
-        resp = cleaned_data.get('q4a')
-        if not resp:
-            raise forms.ValidationError('Write a response')
+    q4a = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140,
+                          required=False)
 
 
 class Question11(forms.Form):
@@ -143,21 +110,17 @@ class Question11(forms.Form):
                ('Strongly Disagree', 'Strongly Disagree'))
     option = forms.ChoiceField(choices=Choices, label='', widget=forms.RadioSelect)
 
-    def clean(self):
-        cleaned_data = super(Question11, self).clean()
-        resp = cleaned_data
-        if not resp:
-            raise forms.ValidationError('Select a choice')
-
 
 class Question12(forms.Form):
-    Response = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140)
-
+    Response = forms.CharField(label='', widget=forms.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140,
+                               required=False)
+    """
     def clean(self):
         cleaned_data = super(Question12, self).clean()
         resp = cleaned_data
         if not resp:
             raise forms.ValidationError('Write a response')
+    """
 
 
 class Question13(forms.Form):
@@ -170,21 +133,16 @@ class Question13(forms.Form):
                ('Extremely negative', 'Extremely negative'))
     Options = forms.ChoiceField(choices=Choices, widget=forms.RadioSelect, label='')
 
-    def clean(self):
-        cleaned_data = super(Question13, self).clean()
-        resp = cleaned_data.get('Options')
-        if not resp:
-            raise forms.ValidationError('Select a choice')
-
 
 class Question14(forms.Form):
-    comment = forms.CharField(label='', widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140)
+    comment = forms.CharField(label='', widget=forms.widgets.Textarea(attrs={'rows': 7, 'cols': 20}), max_length=140,
+                              required=False)
 
-    def clean(self):
-        cleaned_data = super(Question14, self).clean()
-        resp = cleaned_data.get('comment')
-        if not resp:
-            raise forms.ValidationError('Write a response')
+    # def clean(self):
+    #     cleaned_data = super(Question14, self).clean()
+    #     resp = cleaned_data.get('comment')
+    #     if not resp:
+    #         raise forms.ValidationError('Write a response')
 
 
 class Question15(forms.Form):
