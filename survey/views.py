@@ -4,20 +4,22 @@ from django.urls import reverse
 from django.views import generic
 from survey.forms import Question1, Question2, Question3, Question4, Question5, Question7, \
                          Question10, Question11, Question12, Question13, Question14, Question15
-from survey.models import User, Question, Response
+from survey.models import User, Player
+
+
+"Need method that can parse info from game and set user"
+
+'def valid_user(request):'
 
 
 def quest1(request):
 
     if request.method == 'POST':
-        form = Question1(request.POST)
         user = User.objects.get(username='tester')
-        q = user.question_set.get(question_text='I did ___% of the work for my group.')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
+        form = Question1(request.POST)
         if form.is_valid():
-            a.response_text = request.POST.get('number')
-            a.save()
+            user.Player.q1 = request.POST.get('number')
+            user.save()
             return redirect('survey:q2')
     else:
         form = Question1()
@@ -29,12 +31,9 @@ def quest2(request):
     if request.method == 'POST':
         form = Question2(request.POST)
         user = User.objects.get(username='tester')
-        q = user.question_set.get(question_text='Compared to other people in your group, how would you rank your performance on the simulation?')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
         if form.is_valid():
-            a.response_text = request.POST.get('Options')
-            a.save()
+            user.Player.q2 = request.POST.get('Options')
+            user.save()
             return redirect('survey:q3')
     else:
         form = Question2()
@@ -46,13 +45,9 @@ def quest3(request):
     if request.method == 'POST':
         form = Question3(request.POST)
         user = User.objects.get(username='tester')
-        q = user.question_set.get(
-            question_text='One reason that someone else made a poor decision was:')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
         if form.is_valid():
-            a.response_text = request.POST.get('response')
-            a.save()
+            user.Player.q3 = request.POST.get('response')
+            user.save()
             return redirect('survey:q4')
 
     else:
@@ -65,12 +60,9 @@ def quest4(request):
     if request.method == 'POST':
         form = Question4(request.POST)
         user = User.objects.get(username='tester')
-        q = user.question_set.get(question_text='One reason that you made a poor decision was:')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
         if form.is_valid():
-            a.response_text = request.POST.get('response')
-            a.save()
+            user.Player.q4 = request.POST.get('response')
+            user.save()
             return redirect('survey:q5')
     else:
         form = Question4()
@@ -82,12 +74,9 @@ def quest5(request):
     if request.method == 'POST':
         form = Question5(request.POST)
         user = User.objects.get(username='tester')
-        q = user.question_set.get(question_text='The person in my group with the most power was:')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
         if form.is_valid():
-            a.response_text = request.POST.get('Options')
-            a.save()
+            user.Player.q5 = request.POST.get('Options')
+            user.save()
             return redirect('survey:q6')
     else:
         form = Question5()
@@ -99,12 +88,9 @@ def quest6(request):
     if request.method == 'POST':
         form = Question5(request.POST)
         user = User.objects.get(username='tester')
-        q = user.question_set.get(question_text='The person in my group that was most effective was:')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
         if form.is_valid():
-            a.response_text = request.POST.get('Options')
-            a.save()
+            user.Player.q6 = request.POST.get('Options')
+            user.save()
             return redirect('survey:q7')
     else:
         form = Question5()
@@ -116,27 +102,11 @@ def quest7(request):
     if request.method == 'POST':
         form = Question7(request.POST)
         user = User.objects.get(username='tester')
-
-        q = user.question_set.get(question_text='Was there any information that you didn’t share with your group?')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
-
-        i = user.question_set.get(question_text='One piece of information I did not share was:')
-        o = i.response_set.values_list('pk', flat=True)[0]
-        p = i.response_set.get(pk=o)
-
-        t = user.question_set.get(question_text='I chose not to share this information because:')
-        y = t.response_set.values_list('pk', flat=True)[0]
-        u = t.response_set.get(pk=y)
         if form.is_valid():
-            a.response_text = request.POST.get('yn')
-            a.save()
-
-            p.response_text = request.POST.get('response')
-            p.save()
-
-            u.response_text = request.POST.get('response2')
-            u.save()
+            user.Player.q7a = request.POST.get('yn')
+            user.Player.q7b = request.POST.get('response')
+            user.Player.q7c = request.POST.get('response2')
+            user.save()
             return redirect('survey:q8')
     else:
         form = Question7()
@@ -157,35 +127,12 @@ def quest10(request):
     if request.method == 'POST':
         form = Question10(request.POST)
         user = User.objects.get(username='tester')
-
-        q = user.question_set.get(question_text='I would invoke/not invoke the 25th Amendment')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
-
-        i = user.question_set.get(question_text='One reason for this decision is:')
-        o = i.response_set.values_list('pk', flat=True)[0]
-        p = i.response_set.get(pk=o)
-
-        t = user.question_set.get(question_text='Another reason is:')
-        y = t.response_set.values_list('pk', flat=True)[0]
-        u = t.response_set.get(pk=y)
-
-        c = user.question_set.get(question_text='A final reason is:')
-        v = c.response_set.values_list('pk', flat=True)[0]
-        b = c.response_set.get(pk=v)
-
         if form.is_valid():
-            a.response_text = request.POST.get('option')
-            a.save()
-
-            p.response_text = request.POST.get('q2a')
-            p.save()
-
-            u.response_text = request.POST.get('q3a')
-            u.save()
-
-            b.response_text = request.POST.get('q4a')
-            b.save()
+            user.Player.q10a = request.POST.get('option')
+            user.Player.q10b = request.POST.get('q2a')
+            user.Player.q10c = request.POST.get('q3a')
+            user.Player.q10d = request.POST.get('q4a')
+            user.save()
             return redirect('survey:q11')
     else:
         form = Question10()
@@ -197,15 +144,9 @@ def quest11(request):
     if request.method == 'POST':
         form = Question11(request.POST)
         user = User.objects.get(username='tester')
-
-        q = user.question_set.get(
-            question_text='In general, the above questions in this post-simulation questionnaire were clear.')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
-
         if form.is_valid():
-            a.response_text = request.POST.get('option')
-            a.save()
+            user.Player.q11 = request.POST.get('option')
+            user.save()
             return redirect('survey:q12')
     else:
         form = Question11()
@@ -217,15 +158,9 @@ def quest12(request):
     if request.method == 'POST':
         form = Question12(request.POST)
         user = User.objects.get(username='tester')
-
-        q = user.question_set.get(
-            question_text='Were any of the post-simulation questions unclear? If so, please let us know what items were unclear.')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
-
         if form.is_valid():
-            a.response_text = request.POST.get('Response')
-            a.save()
+            user.Player.q12 = request.POST.get('Response')
+            user.save()
             return redirect('survey:q13')
     else:
         form = Question12()
@@ -237,15 +172,9 @@ def quest13(request):
     if request.method == 'POST':
         form = Question13(request.POST)
         user = User.objects.get(username='tester')
-
-        q = user.question_set.get(
-            question_text='Your impression of this Situation Room Experience as a whole is:')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
-
         if form.is_valid():
-            a.response_text = request.POST.get('Options')
-            a.save()
+            user.Player.q13 = request.POST.get('Options')
+            user.save()
             return redirect('survey:q14')
     else:
         form = Question13()
@@ -257,14 +186,9 @@ def quest14(request):
     if request.method == 'POST':
             form = Question14(request.POST)
             user = User.objects.get(username='tester')
-
-            q = user.question_set.get(question_text='Are there any changes to this game that you would like to see made? What are they? Any other comments?')
-            n = q.response_set.values_list('pk', flat=True)[0]
-            a = q.response_set.get(pk=n)
-
             if form.is_valid():
-                a.response_text = request.POST.get('comment')
-                a.save()
+                user.Player.q14 = request.POST.get('comment')
+                user.save()
                 return redirect('survey:q15')
     else:
         form = Question14()
@@ -273,24 +197,14 @@ def quest14(request):
 
 
 def quest15(request):
+
     if request.method == 'POST':
         form = Question15(request.POST)
         user = User.objects.get(username='tester')
-
-        q = user.question_set.get(question_text='Your Name')
-        n = q.response_set.values_list('pk', flat=True)[0]
-        a = q.response_set.get(pk=n)
-
-        i = user.question_set.get(question_text='Your Thoughts')
-        o = i.response_set.values_list('pk', flat=True)[0]
-        p = i.response_set.get(pk=o)
-
         if form.is_valid():
-            a.response_text = request.POST.get('comment1')
-            a.save()
-
-            p.response_text = request.POST.get('comment2')
-            p.save()
+            user.Player.q15a = request.POST.get('comment1')
+            user.Player.q15b = request.POST.get('comment2')
+            user.save()
             pass
     else:
         form = Question15()
